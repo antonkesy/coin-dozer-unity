@@ -25,9 +25,6 @@ public class PusherController : MonoBehaviour
 
         _rb.MovePosition(position);
         
-        Debug.Log(Vector3.Distance(_rb.position,
-            _isForward ? targetTransformForward.position : targetTransformBackwards.position));
-            
         if (Vector3.Distance(_rb.position,
             _isForward ? targetTransformForward.position : targetTransformBackwards.position) <= 1.0)
         {
