@@ -24,9 +24,10 @@ public class PusherController : MonoBehaviour
             speed * Time.fixedDeltaTime);
 
         _rb.MovePosition(position);
-        
-        if (Vector3.Distance(_rb.position,
-            _isForward ? targetTransformForward.position : targetTransformBackwards.position) <= 1.0)
+
+        if (_rb.position.z -
+            (_isForward ? targetTransformForward.position.z : targetTransformBackwards.position.z)
+            <= 1.0)
         {
             _isForward = !_isForward;
         }
