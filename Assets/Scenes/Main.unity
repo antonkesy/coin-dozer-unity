@@ -428,6 +428,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 821189281, guid: 47ec3ac8b611686499f066eb1a0263df, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: c4a4d05143fea144d853931eb6a88dc4, type: 2}
+    - target: {fileID: 1408241496, guid: 47ec3ac8b611686499f066eb1a0263df, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: c4a4d05143fea144d853931eb6a88dc4, type: 2}
+    - target: {fileID: 296479836555599301, guid: 47ec3ac8b611686499f066eb1a0263df, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: c4a4d05143fea144d853931eb6a88dc4, type: 2}
+    - target: {fileID: 449762064034114967, guid: 47ec3ac8b611686499f066eb1a0263df, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: c4a4d05143fea144d853931eb6a88dc4, type: 2}
+    - target: {fileID: 2570193144881202839, guid: 47ec3ac8b611686499f066eb1a0263df, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: c4a4d05143fea144d853931eb6a88dc4, type: 2}
+    - target: {fileID: 2570193145662316656, guid: 47ec3ac8b611686499f066eb1a0263df, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: c4a4d05143fea144d853931eb6a88dc4, type: 2}
     - target: {fileID: 3614719938877715801, guid: 47ec3ac8b611686499f066eb1a0263df, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -471,6 +495,18 @@ PrefabInstance:
     - target: {fileID: 3614719938877715801, guid: 47ec3ac8b611686499f066eb1a0263df, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4075743897669905493, guid: 47ec3ac8b611686499f066eb1a0263df, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: c4a4d05143fea144d853931eb6a88dc4, type: 2}
+    - target: {fileID: 4105652819575653862, guid: 47ec3ac8b611686499f066eb1a0263df, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4105652819575653862, guid: 47ec3ac8b611686499f066eb1a0263df, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7882778735244648266, guid: 47ec3ac8b611686499f066eb1a0263df, type: 3}
       propertyPath: m_Name
