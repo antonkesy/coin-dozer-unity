@@ -26,7 +26,7 @@ public class PusherController : MonoBehaviour
         _rb.MovePosition(position);
 
         if (Mathf.Abs(_rb.position.z -
-            (_isForward ? targetTransformForward.position.z : targetTransformBackwards.position.z))
+                      (_isForward ? targetTransformForward.position.z : targetTransformBackwards.position.z))
             <= 1.0)
         {
             _isForward = !_isForward;
