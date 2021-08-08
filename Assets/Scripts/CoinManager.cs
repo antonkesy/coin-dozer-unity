@@ -36,7 +36,9 @@ public class CoinManager : MonoBehaviour
             {
                 if (hit.point.x >= xMin && hit.point.x <= xMax && hit.point.y >= yMin && hit.point.y <= yMax)
                 {
-                    AddCoin(hit.point);
+                    var position = hit.point;
+                    position.y = coinSpawnHeight;
+                    AddCoin(position);
                 }
             }
         }
@@ -58,7 +60,6 @@ public class CoinManager : MonoBehaviour
 
     private GameObject SpawnCoin(Vector3 position)
     {
-        position.y = coinSpawnHeight;
         var newCoin = Instantiate(coinPrefab, transform);
         newCoin.transform.localPosition = position;
         return newCoin;
@@ -67,7 +68,6 @@ public class CoinManager : MonoBehaviour
     //TODO refactor to add coin to always call this instead of raw? performance lost
     private GameObject AddCoin(Vector3 position)
     {
-        position.y = coinSpawnHeight;
         //O(n)
         //TODO add flag when full
         //TODO linked list for free spots
