@@ -16,10 +16,14 @@ public class CoinManager : MonoBehaviour
     [SerializeField] private float yMax;
     private Camera _main;
 
+
     private void Start()
     {
         _main = Camera.main;
         FillPoolWithCoins();
+
+        //
+        SetCoinsNewStartPos();
     }
 
     private void Update()
@@ -77,5 +81,37 @@ public class CoinManager : MonoBehaviour
 
         //else
         _coinPool.Add(SpawnCoin(position));
+    }
+
+    private void SetCoinsNewStartPos()
+    {
+        var newStartRows = 6;
+        var newStartColumns = 6;
+        var smallRowCount = 4;
+        var spacer = .1f;
+        var coinRadius = coinPrefab.transform.localScale.x;
+        var zPosCoin = 3.5F; //y start pos
+        var xPosCoin = coinRadius * smallRowCount / 2 - coinRadius / 2 + spacer * smallRowCount / 2;
+        //small row
+        for (var i = 0; i < smallRowCount; ++i)
+        {
+            _coinPool[i].transform.position = new Vector3(xPosCoin, 0, zPosCoin);
+            _coinPool[i].SetActive(true);
+            xPosCoin -= coinRadius + spacer;
+        }
+
+        //full rows
+        for (var rows = 0; rows < newStartRows; ++rows)
+        {
+            xPosCoin = coinRadius * newStartColumns / 2 - coinRadius / 2 + spacer * newStartColumns / 2;
+            zPosCoin += coinRadius + spacer;
+            for (var column = 0; column < newStartColumns; ++column)
+            {
+                var index = newStartColumns * rows + column + smallRowCount;
+                _coinPool[index].transform.position = new Vector3(xPosCoin, 0, zPosCoin);
+                _coinPool[index].SetActive(true);
+                xPosCoin -= coinRadius + spacer;
+            }
+        }
     }
 }
