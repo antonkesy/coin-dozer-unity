@@ -1,9 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CoinManager : MonoBehaviour
 {
+    private List<GameObject> _coinPool;
+    [SerializeField] private Vector3 coinPoolPos;
+    [SerializeField] private int coinsInPool = 50;
+
     [SerializeField] private GameObject coinPrefab;
     [SerializeField] private float coinSpawnHeight;
 
@@ -13,14 +16,13 @@ public class CoinManager : MonoBehaviour
     [SerializeField] private float yMax;
     private Camera _main;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _main = Camera.main;
+        FillPoolWithCoins();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -30,16 +32,50 @@ public class CoinManager : MonoBehaviour
             {
                 if (hit.point.x >= xMin && hit.point.x <= xMax && hit.point.y >= yMin && hit.point.y <= yMax)
                 {
-                    SpawnCoin(hit.point);
+                    UserAddCoin(hit.point);
                 }
             }
         }
     }
 
-    private void SpawnCoin(Vector3 position)
+    private void FillPoolWithCoins()
+    {
+        _coinPool = new List<GameObject>
+        {
+            Capacity = coinsInPool
+        };
+        for (var i = 0; i < coinsInPool; ++i)
+        {
+            var newCoin = SpawnCoin(coinPoolPos);
+            newCoin.SetActive(false);
+            _coinPool.Add(newCoin);
+        }
+    }
+
+    private GameObject SpawnCoin(Vector3 position)
     {
         position.y = coinSpawnHeight;
         var newCoin = Instantiate(coinPrefab, transform);
-        newCoin.transform.position = position;
+        newCoin.transform.localPosition = position;
+        return newCoin;
+    }
+
+    private void UserAddCoin(Vector3 position)
+    {
+        position.y = coinSpawnHeight;
+        //O(n)
+        //TODO add flag when full
+        foreach (var t in _coinPool)
+        {
+            if (!t.activeSelf)
+            {
+                t.transform.localPosition = position;
+                t.SetActive(true);
+                return;
+            }
+        }
+
+        //else
+        _coinPool.Add(SpawnCoin(position));
     }
 }
