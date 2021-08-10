@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LevelManager levelManager;
     [SerializeField] private CoinManager coinManager;
     [SerializeField] private UIManager uiManger;
+    [SerializeField] private Shaker shaker;
 
 
     [SerializeField] private bool loadGameData;
@@ -58,5 +59,10 @@ public class GameManager : MonoBehaviour
     public void UpdateLevelUI(long level)
     {
         uiManger.UpdateLevel(level);
+    }
+
+    public void Shake()
+    {
+        shaker.StartShaking(10);
     }
 }
