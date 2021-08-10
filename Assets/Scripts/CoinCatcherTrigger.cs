@@ -12,7 +12,8 @@ public class CoinCatcherTrigger : MonoBehaviour
     {
         if (other.CompareTag("Coin"))
         {
-            _coinCatcher.CallbackCoinCatcherTrigger(_isWin);
+            var value = other.GetComponent<Coin>().value;
+            _coinCatcher.CallbackCoinCatcherTrigger(_isWin, value);
         }
     }
 

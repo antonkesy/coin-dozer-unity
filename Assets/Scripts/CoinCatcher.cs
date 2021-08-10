@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CoinCatcher : MonoBehaviour
 {
+    [SerializeField] private GameManager gameManager;
     [SerializeField] private CoinCatcherTrigger[] failTrigger;
     [SerializeField] private CoinCatcherTrigger[] winTrigger;
 
@@ -31,8 +32,14 @@ public class CoinCatcher : MonoBehaviour
     }
 
 
-    public void CallbackCoinCatcherTrigger(bool isWin)
+    public void CallbackCoinCatcherTrigger(bool isWin, int value)
     {
-        Debug.Log($"Coin fallen -> is win? = {isWin}");
+#if UNITY_EDITOR
+        Debug.Log($"Coin fallen -> is win? = {isWin} value={value}");
+#endif
+        if (isWin)
+        {
+            gameManager.AddScore(value);
+        }
     }
 }
