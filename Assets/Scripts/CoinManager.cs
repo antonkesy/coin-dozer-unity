@@ -16,14 +16,18 @@ public class CoinManager : MonoBehaviour
     [SerializeField] private float yMax;
     private Camera _main;
 
-
     private void Start()
     {
         _main = Camera.main;
         FillPoolWithCoins();
-
         //
         SetCoinsNewStartPos();
+
+#if UNITY_EDITOR
+        GameSaver.SaveGame(new GameSaver.SaveData(1, 2, _coinPool));
+        var savedData = GameSaver.LoadGame();
+        Debug.Log(savedData);
+#endif
     }
 
     private void Update()
