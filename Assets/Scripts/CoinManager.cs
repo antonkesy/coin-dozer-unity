@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CoinManager : MonoBehaviour
@@ -16,18 +17,31 @@ public class CoinManager : MonoBehaviour
     [SerializeField] private float yMax;
     private Camera _main;
 
-    private void Start()
+
+    private void Awake()
     {
         _main = Camera.main;
         FillPoolWithCoins();
-        //
-        SetCoinsNewStartPos();
+    }
 
-#if UNITY_EDITOR
-        GameSaver.SaveGame(new GameSaver.SaveData(1, 2, _coinPool));
-        var savedData = GameSaver.LoadGame();
-        Debug.Log(savedData);
-#endif
+    internal void StartCall(bool loadSaveData, GameSaver.SaveData saveData)
+    {
+        if (loadSaveData)
+        {
+            SetCoinsFromSavedPosition(saveData);
+        }
+        else
+        {
+            SetCoinsNewStartPos();
+        }
+    }
+
+    private void SetCoinsFromSavedPosition(GameSaver.SaveData savedData)
+    {
+        foreach (var coin in savedData.coins)
+        {
+            AddCoin(coin);
+        }
     }
 
     private void Update()
@@ -69,20 +83,29 @@ public class CoinManager : MonoBehaviour
         return newCoin;
     }
 
+    private GameObject AddCoin(GameSaver.SaveData.CoinData coinData)
+    {
+        var coin = AddCoin(coinData.position);
+        coin.transform.rotation = coinData.rotation;
+        var rb=coin.GetComponent<Rigidbody>();
+        rb.velocity= coinData.velocity;
+        rb.angularVelocity = coinData.angularVelocity;
+        //todo set coin value
+        return coin;
+    }
+
     //TODO refactor to add coin to always call this instead of raw? performance lost
+    //TODO no value differentiation
     private GameObject AddCoin(Vector3 position)
     {
         //O(n)
         //TODO add flag when full
         //TODO linked list for free spots
-        foreach (var coin in _coinPool)
+        foreach (var coin in _coinPool.Where(coin => !coin.activeSelf))
         {
-            if (!coin.activeSelf)
-            {
-                coin.transform.localPosition = position;
-                coin.SetActive(true);
-                return coin;
-            }
+            coin.transform.localPosition = position;
+            coin.SetActive(true);
+            return coin;
         }
 
         //else
@@ -93,11 +116,11 @@ public class CoinManager : MonoBehaviour
 
     private void SetCoinsNewStartPos()
     {
-        var newStartRows = 6;
-        var newStartColumns = 6;
+        const int newStartRows = 6;
+        const int newStartColumns = 6;
 
-        var smallRowCount = 4;
-        var spacer = .1f;
+        const int smallRowCount = 4;
+        const float spacer = .1f;
         var coinRadius = coinPrefab.transform.localScale.x;
         var zPosCoin = 3.5F; //z start pos
         var xPosCoin = coinRadius * smallRowCount / 2 - coinRadius / 2 + spacer * smallRowCount / 2;
@@ -121,5 +144,10 @@ public class CoinManager : MonoBehaviour
             coin.SetActive(true);
             xPosStart -= spacePerCoin;
         }
+    }
+
+    internal List<GameObject> GetUsedCoins()
+    {
+        return _coinPool.Where(coin => coin.activeSelf).ToList();
     }
 }
