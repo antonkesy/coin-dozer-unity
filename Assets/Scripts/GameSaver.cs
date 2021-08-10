@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class GameSaver
 {
-    private static readonly string Path = $"{Application.persistentDataPath}/data.json";
+    private static readonly string Path = $"{Application.persistentDataPath}/data.data";
 
     [Serializable]
     internal class SaveData
@@ -53,11 +53,32 @@ public static class GameSaver
 
     internal static void SaveGame(SaveData data)
     {
-        File.WriteAllText(Path, JsonUtility.ToJson(data));
+        var jsonString = JsonUtility.ToJson(data);
+        try
+        {
+            var encrypted = Cryptor.EncryptStringToBytes(jsonString, Secrets.Key, Secrets.IV);
+            File.WriteAllBytes(Path, encrypted);
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+        }
     }
 
     internal static SaveData LoadGame()
     {
-        return JsonUtility.FromJson<SaveData>(File.ReadAllText(Path));
+        SaveData data = null;
+        try
+        {
+            var readBytes = File.ReadAllBytes(Path);
+            data = JsonUtility.FromJson<SaveData>(
+                Cryptor.DecryptStringFromBytes(readBytes, Secrets.Key, Secrets.IV));
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+        }
+
+        return data;
     }
 }

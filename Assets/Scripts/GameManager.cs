@@ -15,12 +15,16 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         GameSaver.SaveData saveData = null;
+
         if (loadGameData)
         {
             saveData = GameSaver.LoadGame();
+#if UNITY_EDITOR
+            Debug.Log($"savaData==null = {saveData == null}");
+#endif
         }
 
-        coinManager.StartCall(loadGameData, saveData);
+        coinManager.StartCall(loadGameData && saveData != null, saveData);
     }
 
     private void OnApplicationQuit()
