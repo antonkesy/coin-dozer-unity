@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private LevelManager levelManager;
     [SerializeField] private CoinManager coinManager;
     [SerializeField] private UIManager uiManger;
-    private int _levelScore;
-    private int _level;
-    private int _xpPerLevel = 10;
+
 
     [SerializeField] private bool loadGameData;
 
@@ -31,9 +30,7 @@ public class GameManager : MonoBehaviour
 
     public void AddScore(int value)
     {
-        _levelScore += value;
-        //TODO check level/save & more
-        uiManger.UpdateScore(_levelScore);
+        levelManager.AddScore(value);
     }
 
     private void SaveGameData()
@@ -46,6 +43,16 @@ public class GameManager : MonoBehaviour
             coinData.Add(new GameSaver.SaveData.CoinData(coin));
         }
 
-        GameSaver.SaveGame(new GameSaver.SaveData(_levelScore, _level, coinData));
+        GameSaver.SaveGame(new GameSaver.SaveData(levelManager.levelScore, levelManager.level, coinData));
+    }
+
+    public void UpdateScoreUI(long levelScore, long scorePerLevel)
+    {
+        uiManger.UpdateScore(levelScore, scorePerLevel);
+    }
+
+    public void UpdateLevelUI(long level)
+    {
+        uiManger.UpdateLevel(level);
     }
 }
