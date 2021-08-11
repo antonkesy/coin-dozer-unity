@@ -19,9 +19,6 @@ public class GameManager : MonoBehaviour
         if (loadGameData)
         {
             saveData = GameSaver.LoadGame();
-#if UNITY_EDITOR
-            Debug.Log($"savaData==null = {saveData == null}");
-#endif
         }
 
         coinManager.StartCall(loadGameData && saveData != null, saveData);
