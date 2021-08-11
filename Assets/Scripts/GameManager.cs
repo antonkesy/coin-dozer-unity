@@ -29,11 +29,28 @@ public class GameManager : MonoBehaviour
         SaveGameData();
     }
 
+    void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            SaveGameData();
+        }
+    }
+
+    void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus)
+        {
+            SaveGameData();
+        }
+    }
+
     public void AddScore(int value)
     {
         levelManager.AddScore(value);
     }
 
+    //TODO move to GameSaver
     private void SaveGameData()
     {
         var coins = coinManager.GetUsedCoins();
