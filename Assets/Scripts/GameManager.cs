@@ -8,9 +8,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private UIManager uiManger;
     [SerializeField] private Shaker shaker;
 
+    [SerializeField] private WallsPowerUpManager wallsPowerUpManager;
 
     [SerializeField] private bool loadGameData;
-
 
     private void Start()
     {
@@ -68,5 +68,10 @@ public class GameManager : MonoBehaviour
     public void CoinFallenDown(Coin coin)
     {
         coinManager.RemoveCoin(coin);
+    }
+
+    public void ActivateWallPowerUp()
+    {
+        wallsPowerUpManager.Activate();
     }
 }
