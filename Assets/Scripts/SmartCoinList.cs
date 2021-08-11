@@ -56,7 +56,6 @@ internal class SmartCoinList
             var coin = Coins[unusedCoinSpot];
             coin.transform.localPosition = position;
             coin.gameObject.SetActive(true);
-            Debug.Log(coin.Index);
             return coin;
         }
 
@@ -66,7 +65,6 @@ internal class SmartCoinList
         var count = Coins.Count;
         var newCoin = _coinManager.SpawnCoin(position);
         newCoin.Index = count;
-        Debug.Log(newCoin.Index);
         Coins.Add(newCoin);
         return newCoin;
     }

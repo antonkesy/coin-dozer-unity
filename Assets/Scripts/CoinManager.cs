@@ -9,19 +9,12 @@ public class CoinManager : MonoBehaviour
     [SerializeField] private GameObject coinPrefab;
     [SerializeField] private float coinSpawnHeight;
 
-    [SerializeField] private float xMin;
-    [SerializeField] private float xMax;
-    [SerializeField] private float yMin;
-    [SerializeField] private float yMax;
-    private Camera _main;
-
     private SmartCoinList _coins;
 
 
     private void Awake()
     {
         _coins = new SmartCoinList(this, coinsInPool);
-        _main = Camera.main;
     }
 
     internal void StartCall(bool loadSaveData, GameSaver.SaveData saveData)
@@ -44,22 +37,10 @@ public class CoinManager : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void ClickPos(Vector3 hitInfoPoint)
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            var ray = _main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out var hit))
-            {
-                if (hit.point.x >= xMin && hit.point.x <= xMax && hit.point.y >= yMin && hit.point.y <= yMax)
-                {
-                    var position = hit.point;
-                    position.y = coinSpawnHeight;
-                    _coins.Add(position);
-                }
-            }
-        }
+        hitInfoPoint.y = coinSpawnHeight;
+        _coins.Add(hitInfoPoint);
     }
 
     internal Coin SpawnCoin(Vector3 position)
