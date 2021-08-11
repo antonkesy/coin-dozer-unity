@@ -491,7 +491,7 @@ Transform:
   - {fileID: 692947697}
   m_Father: {fileID: 0}
   m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 3, y: 3, z: 6}
+  m_LocalEulerAnglesHint: {x: 0, y: 3, z: 0}
 --- !u!111 &742813442
 Animation:
   m_ObjectHideFlags: 0
