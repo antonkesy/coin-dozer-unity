@@ -1812,7 +1812,7 @@ MonoBehaviour:
   uiManger: {fileID: 47124518}
   shaker: {fileID: 1425554079}
   wallsPowerUpManager: {fileID: 1092764476}
-  loadGameData: 0
+  loadGameData: 1
 --- !u!4 &2005948130
 Transform:
   m_ObjectHideFlags: 0

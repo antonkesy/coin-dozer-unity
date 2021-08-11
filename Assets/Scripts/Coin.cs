@@ -6,7 +6,7 @@ public class Coin : MonoBehaviour
     internal Rigidbody Rb { private set; get; }
     [SerializeField] public int value = 1;
 
-    private void Start()
+    private void Awake()
     {
         Rb = GetComponent<Rigidbody>();
     }
