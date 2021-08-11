@@ -21,17 +21,21 @@ public class Shaker : MonoBehaviour
         }
 
         _isShaking = true;
-
-        shakeAnimation.Play();
         _maxShakeTime = shakeTime;
     }
 
     private void Update()
     {
-        _timeShaked += Time.fixedDeltaTime;
         if (_timeShaked > _maxShakeTime)
         {
             ShakeReset();
+        }
+
+        _timeShaked += Time.fixedDeltaTime;
+
+        if (_isShaking)
+        {
+            shakeAnimation.Play();
         }
     }
 
