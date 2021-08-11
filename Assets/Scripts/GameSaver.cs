@@ -7,6 +7,8 @@ public static class GameSaver
 {
     private static readonly string Path = $"{Application.persistentDataPath}/data.data";
 
+    private static bool _dontSave;
+
     [Serializable]
     internal class SaveData
     {
@@ -53,6 +55,8 @@ public static class GameSaver
 
     internal static void SaveGame(SaveData data)
     {
+        if (_dontSave) return;
+
         var jsonString = JsonUtility.ToJson(data);
         try
         {
@@ -80,5 +84,11 @@ public static class GameSaver
         }
 
         return data;
+    }
+
+    public static void ResetData()
+    {
+        _dontSave = true;
+        File.WriteAllBytes(Path, new byte[] { });
     }
 }

@@ -28,4 +28,10 @@ public class UIManager : MonoBehaviour
         Debug.Log("Wall activated");
         gameManager.ActivateWallPowerUp();
     }
+
+    public void DEBUG_ResetSaveGame()
+    {
+        Debug.Log("Reset save game");
+        GameSaver.ResetData();
+    }
 }
