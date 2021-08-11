@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
 
     public void Shake()
     {
-        shaker.StartShaking(10);
+        shaker.StartShaking(3);
     }
 
     public void CoinFallenDown(Coin coin)

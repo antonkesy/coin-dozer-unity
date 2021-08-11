@@ -1,14 +1,19 @@
-using System.Collections;
 using UnityEngine;
 
 public class Shaker : MonoBehaviour
 {
-    [SerializeField] private Transform shakeObjectsGroup;
-
+    [SerializeField] private Animation shakeAnimation;
 
     private bool _isShaking;
 
-    internal void StartShaking(int shakes)
+    private float _timeShaked;
+
+    private int _maxShakeTime;
+
+    private bool _isLeftShake;
+    private float _sideShakeTime;
+
+    internal void StartShaking(int shakeTime)
     {
         if (_isShaking)
         {
@@ -16,38 +21,23 @@ public class Shaker : MonoBehaviour
         }
 
         _isShaking = true;
-        StartCoroutine(ShakeCoroutine(shakes));
+
+        shakeAnimation.Play();
+        _maxShakeTime = shakeTime;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        //todo move shaking here
-    }
-
-    private IEnumerator ShakeCoroutine(int shakes)
-    {
-#if UNITY_EDITOR
-        Debug.Log("Start Shaking");
-#endif
-        for (var i = 0; i < shakes; ++i)
+        _timeShaked += Time.fixedDeltaTime;
+        if (_timeShaked > _maxShakeTime)
         {
-            var side = i % 2 == 0;
-            var rotation = new Vector3(side ? 0F : 3F, side ? 1F : -1F, side ? 2F : -2F);
-            var position = new Vector3(0F, 0F, side ? 0.1F : -0.1F);
-            SetShakeObjectRotation(rotation, position);
-            yield return new WaitForSecondsRealtime(.3F);
+            ShakeReset();
         }
-
-        SetShakeObjectRotation(Vector3.zero, Vector3.zero);
-
-        _isShaking = false;
-        yield return null;
     }
 
-    private void SetShakeObjectRotation(Vector3 eulerRotation, Vector3 position)
+    private void ShakeReset()
     {
-        //change rotation and position
-        shakeObjectsGroup.position = position;
-        shakeObjectsGroup.rotation = Quaternion.Euler(eulerRotation);
+        _isShaking = false;
+        _timeShaked = 0F;
     }
 }

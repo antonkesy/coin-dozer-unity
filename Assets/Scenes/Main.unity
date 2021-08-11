@@ -466,6 +466,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 742813441}
+  - component: {fileID: 742813442}
   m_Layer: 0
   m_Name: StaticObjects
   m_TagString: Untagged
@@ -490,7 +491,23 @@ Transform:
   - {fileID: 692947697}
   m_Father: {fileID: 0}
   m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 3, y: -2, z: -3}
+--- !u!111 &742813442
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742813440}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 8b9ad53836263d84bb059e5d17f27ce1, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 8b9ad53836263d84bb059e5d17f27ce1, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,6 +805,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shakeObjectsGroup: {fileID: 742813441}
+  shakeAnimation: {fileID: 742813442}
 --- !u!4 &1425554080
 Transform:
   m_ObjectHideFlags: 0
