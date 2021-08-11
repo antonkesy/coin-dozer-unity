@@ -1,5 +1,6 @@
+using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
@@ -20,35 +21,62 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
+#if UNITY_EDITOR
+        HandleMouseInput();
+#else
+        HandleTouchInput();
+#endif
+    }
+
+    private void HandleMouseInput()
+    {
         if (Input.GetMouseButtonDown(0))
         {
-            var ray = _main.ScreenPointToRay(Input.mousePosition);
+            RayCastInput(Input.mousePosition);
+        }
+    }
 
-            if (Physics.Raycast(ray, out var hit))
+    private void HandleTouchInput()
+    {
+        if (Input.touchCount <= 0) return;
+
+        foreach (Touch touch in Input.touches)
+        {
+            if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
             {
-                Debug.Log(hit.transform.position);
+                // ui touched
+                return;
+            }
+        }
 
-                if (XInRange(hit.point.x) && ZInRange(hit.point.z))
-                {
-                    coinManager.ClickPos(hit.point);
-                }
+        RayCastInput(Input.touches.First(touch => touch.phase == TouchPhase.Began).position);
+    }
+
+    private void RayCastInput(Vector3 clickPosition)
+    {
+        var ray = _main.ScreenPointToRay(clickPosition);
+
+        if (Physics.Raycast(ray, out var hit))
+        {
+            if (XInRange(hit.point.x) && ZInRange(hit.point.z))
+            {
+                coinManager.ClickPos(hit.point);
             }
         }
     }
 
+
     private bool XInRange(float x)
     {
-        Debug.Log("X " + InRange(-coinSpawnWidth, coinSpawnWidth, x));
         return InRange(-coinSpawnWidth, coinSpawnWidth, x);
     }
 
     private bool ZInRange(float z)
     {
-        Debug.Log("Z " + InRange(zMin, zMax, z));
         return InRange(zMin, zMax, z);
     }
 
-    private bool InRange(float min, float max, float value)
+    private static bool InRange(float min, float max, float value)
     {
         return value >= min && value <= max;
     }
