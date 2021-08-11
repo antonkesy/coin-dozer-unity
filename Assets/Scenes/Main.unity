@@ -1441,6 +1441,10 @@ PrefabInstance:
       value: CoinCatcher
       objectReference: {fileID: 0}
     - target: {fileID: 3644818459056809810, guid: 5787e90ad5f0e1e4aae3314daae14483, type: 3}
+      propertyPath: coinManager
+      value: 
+      objectReference: {fileID: 1094437020}
+    - target: {fileID: 3644818459056809810, guid: 5787e90ad5f0e1e4aae3314daae14483, type: 3}
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 2005948129}

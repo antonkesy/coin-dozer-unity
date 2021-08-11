@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CoinManager : MonoBehaviour
 {
-    private List<GameObject> _coinPool;
-    [SerializeField] private Vector3 coinPoolPos;
     [SerializeField] private int coinsInPool = 50;
 
     [SerializeField] private GameObject coinPrefab;
@@ -17,11 +15,13 @@ public class CoinManager : MonoBehaviour
     [SerializeField] private float yMax;
     private Camera _main;
 
+    private SmartCoinList _coins;
+
 
     private void Awake()
     {
+        _coins = new SmartCoinList(this, coinsInPool);
         _main = Camera.main;
-        FillPoolWithCoins();
     }
 
     internal void StartCall(bool loadSaveData, GameSaver.SaveData saveData)
@@ -40,7 +40,7 @@ public class CoinManager : MonoBehaviour
     {
         foreach (var coin in savedData.coins)
         {
-            AddCoin(coin);
+            _coins.Add(coin);
         }
     }
 
@@ -56,63 +56,19 @@ public class CoinManager : MonoBehaviour
                 {
                     var position = hit.point;
                     position.y = coinSpawnHeight;
-                    AddCoin(position);
+                    _coins.Add(position);
                 }
             }
         }
     }
 
-    private void FillPoolWithCoins()
-    {
-        _coinPool = new List<GameObject>
-        {
-            Capacity = coinsInPool
-        };
-        for (var i = 0; i < coinsInPool; ++i)
-        {
-            var newCoin = SpawnCoin(coinPoolPos);
-            newCoin.SetActive(false);
-            _coinPool.Add(newCoin);
-        }
-    }
-
-    private GameObject SpawnCoin(Vector3 position)
+    internal Coin SpawnCoin(Vector3 position)
     {
         var newCoin = Instantiate(coinPrefab, transform);
         newCoin.transform.localPosition = position;
-        return newCoin;
+        return newCoin.GetComponent<Coin>();
     }
 
-    private GameObject AddCoin(GameSaver.SaveData.CoinData coinData)
-    {
-        var coin = AddCoin(coinData.position);
-        coin.transform.rotation = coinData.rotation;
-        var rb=coin.GetComponent<Rigidbody>();
-        rb.velocity= coinData.velocity;
-        rb.angularVelocity = coinData.angularVelocity;
-        //todo set coin value
-        return coin;
-    }
-
-    //TODO refactor to add coin to always call this instead of raw? performance lost
-    //TODO no value differentiation
-    private GameObject AddCoin(Vector3 position)
-    {
-        //O(n)
-        //TODO add flag when full
-        //TODO linked list for free spots
-        foreach (var coin in _coinPool.Where(coin => !coin.activeSelf))
-        {
-            coin.transform.localPosition = position;
-            coin.SetActive(true);
-            return coin;
-        }
-
-        //else
-        var newCoin = SpawnCoin(position);
-        _coinPool.Add(newCoin);
-        return newCoin;
-    }
 
     private void SetCoinsNewStartPos()
     {
@@ -140,14 +96,19 @@ public class CoinManager : MonoBehaviour
     {
         for (var column = 0; column < amount; ++column)
         {
-            var coin = AddCoin(new Vector3(xPosStart, 0, zPos));
-            coin.SetActive(true);
+            var coin = _coins.Add(new Vector3(xPosStart, 0, zPos));
+            coin.gameObject.SetActive(true);
             xPosStart -= spacePerCoin;
         }
     }
 
     internal List<GameObject> GetUsedCoins()
     {
-        return _coinPool.Where(coin => coin.activeSelf).ToList();
+        return _coins.Coins.Where(coin => coin.gameObject.activeSelf).Select(coin => coin.gameObject).ToList();
+    }
+
+    public void RemoveCoin(Coin coin)
+    {
+        _coins.Remove(coin);
     }
 }

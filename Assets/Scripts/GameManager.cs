@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -64,5 +63,10 @@ public class GameManager : MonoBehaviour
     public void Shake()
     {
         shaker.StartShaking(10);
+    }
+
+    public void CoinFallenDown(Coin coin)
+    {
+        coinManager.RemoveCoin(coin);
     }
 }

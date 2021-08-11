@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CoinCatcherTrigger : MonoBehaviour
@@ -12,8 +9,7 @@ public class CoinCatcherTrigger : MonoBehaviour
     {
         if (other.CompareTag("Coin"))
         {
-            var value = other.GetComponent<Coin>().value;
-            _coinCatcher.CallbackCoinCatcherTrigger(_isWin, value);
+            _coinCatcher.CallbackCoinCatcherTrigger(_isWin, other.GetComponent<Coin>());
         }
     }
 

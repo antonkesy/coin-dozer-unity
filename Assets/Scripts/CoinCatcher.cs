@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CoinCatcher : MonoBehaviour
@@ -9,7 +6,7 @@ public class CoinCatcher : MonoBehaviour
     [SerializeField] private CoinCatcherTrigger[] failTrigger;
     [SerializeField] private CoinCatcherTrigger[] winTrigger;
 
-    void Start()
+    private void Start()
     {
         SetupFailTrigger();
         SetupWinTrigger();
@@ -32,14 +29,16 @@ public class CoinCatcher : MonoBehaviour
     }
 
 
-    public void CallbackCoinCatcherTrigger(bool isWin, int value)
+    public void CallbackCoinCatcherTrigger(bool isWin, Coin coin)
     {
 #if UNITY_EDITOR
-        Debug.Log($"Coin fallen -> is win? = {isWin} value={value}");
+        Debug.Log($"Coin fallen -> is win? = {isWin} value={coin.value}");
 #endif
         if (isWin)
         {
-            gameManager.AddScore(value);
+            gameManager.AddScore(coin.value);
         }
+
+        gameManager.CoinFallenDown(coin);
     }
 }
