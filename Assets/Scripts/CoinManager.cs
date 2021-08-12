@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CoinManager : MonoBehaviour
 {
@@ -11,11 +13,14 @@ public class CoinManager : MonoBehaviour
 
     private SmartCoinList _coins;
 
+    [SerializeField] private CoinRemoveManager coinRemoveManager;
 
     private void Awake()
     {
         _coins = new SmartCoinList(this, coinsInPool);
+        coinRemoveManager.SetUp(_coins);
     }
+
 
     internal void StartCall(bool loadSaveData, GameSaver.SaveData saveData)
     {
@@ -90,6 +95,6 @@ public class CoinManager : MonoBehaviour
 
     public void RemoveCoin(Coin coin)
     {
-        _coins.Remove(coin);
+        coinRemoveManager.RemoveCoin(coin);
     }
 }

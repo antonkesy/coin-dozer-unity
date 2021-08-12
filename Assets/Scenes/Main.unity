@@ -524,6 +524,23 @@ Transform:
   m_Father: {fileID: 1092764475}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &415118062 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9105753356021666015, guid: 52d0fd3ed5d8efe4dada45e1e3f93a88, type: 3}
+  m_PrefabInstance: {fileID: 9105753356594862265}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &415118063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415118062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80df637fedef48259209a00e223783ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &440450670
 GameObject:
   m_ObjectHideFlags: 0
@@ -1395,7 +1412,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9105753356021666014, guid: 52d0fd3ed5d8efe4dada45e1e3f93a88, type: 3}
   m_PrefabInstance: {fileID: 9105753356594862265}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 415118062}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9e9074223b2cb6419636849e3daa5af, type: 3}
@@ -2590,6 +2607,10 @@ PrefabInstance:
       propertyPath: coinSpawnHeight
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 9105753356021666014, guid: 52d0fd3ed5d8efe4dada45e1e3f93a88, type: 3}
+      propertyPath: coinRemoveManager
+      value: 
+      objectReference: {fileID: 415118063}
     - target: {fileID: 9105753356021666015, guid: 52d0fd3ed5d8efe4dada45e1e3f93a88, type: 3}
       propertyPath: m_Name
       value: CoinManager

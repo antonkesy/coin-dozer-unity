@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private bool loadGameData;
 
+
     private void Start()
     {
         GameSaver.SaveData saveData = null;
