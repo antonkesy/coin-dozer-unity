@@ -6,8 +6,8 @@ public class CoinRemoveManager : MonoBehaviour
 {
     private class CoinDeleteData
     {
-        public Coin Coin;
-        public float DeletionTime;
+        public readonly Coin Coin;
+        public readonly float DeletionTime;
 
         internal CoinDeleteData(Coin coin)
         {
@@ -16,7 +16,7 @@ public class CoinRemoveManager : MonoBehaviour
         }
     }
 
-    private readonly Queue<CoinDeleteData> RemoveCoinQue = new Queue<CoinDeleteData>();
+    private readonly Queue<CoinDeleteData> _removeCoinQue = new Queue<CoinDeleteData>();
 
     private SmartCoinList _smartCoinList;
 
@@ -35,14 +35,14 @@ public class CoinRemoveManager : MonoBehaviour
 
     public void RemoveCoin(Coin coin)
     {
-        RemoveCoinQue.Enqueue(new CoinDeleteData(coin));
+        _removeCoinQue.Enqueue(new CoinDeleteData(coin));
     }
 
     private void CheckRemoveCoinQue()
     {
-        if (RemoveCoinQue.Count > 0 && RemoveCoinQue.Peek().DeletionTime < Time.time)
+        if (_removeCoinQue.Count > 0 && _removeCoinQue.Peek().DeletionTime < Time.time)
         {
-            _smartCoinList.Remove(RemoveCoinQue.Dequeue().Coin);
+            _smartCoinList.Remove(_removeCoinQue.Dequeue().Coin);
         }
     }
 }
