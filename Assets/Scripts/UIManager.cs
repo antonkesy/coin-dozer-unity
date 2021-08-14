@@ -4,6 +4,7 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private PowerUpManager powerUpManager;
 
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text levelText;
@@ -33,5 +34,10 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log("Reset save game");
         GameSaver.ResetData();
+    }
+
+    public void DEBUG_SpawnPowerUpWall()
+    {
+        powerUpManager.SpawnWallPowerUpObject();
     }
 }

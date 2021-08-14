@@ -14,40 +14,60 @@ public static class GameSaver
     {
         public long levelScore;
         public long level;
-        public List<CoinData> coins;
+        public List<CoinSaveData> coins;
+        public List<PowerUpSaveData> powerUps;
 
-        public SaveData(long levelScore, long level, List<CoinData> coins)
+        public SaveData(long levelScore, long level, List<CoinSaveData> coins, List<PowerUpSaveData> powerUps)
         {
             this.level = level;
             this.levelScore = levelScore;
+            this.powerUps = powerUps;
             this.coins = coins;
         }
 
         public override string ToString()
         {
-            return $"level={level}\tlevelScore={levelScore}\tcoinsCount={coins.Count}";
+            return $"level={level}\tlevelScore={levelScore}\tcoinsCount={powerUps.Count}";
         }
 
         [Serializable]
-        internal class CoinData
+        internal class MovableObjectSaveData
         {
             public Vector3 position;
             public Quaternion rotation;
             public Vector3 velocity;
             public Vector3 angularVelocity;
+
+            //Todo fix for saving objects
+            internal MovableObjectSaveData(MovableObject movableObject)
+            {
+                position = movableObject.transform.position;
+                rotation = movableObject.transform.rotation;
+                var rb = movableObject.GetComponent<Rigidbody>();
+                velocity = rb.velocity;
+                angularVelocity = rb.angularVelocity;
+            }
+        }
+
+        [Serializable]
+        internal class CoinSaveData : MovableObjectSaveData
+        {
             public int value;
 
-            internal CoinData(GameObject coin)
+            internal CoinSaveData(MovableObject movableObject) : base(movableObject)
             {
-                if (coin.CompareTag("Coin"))
-                {
-                    position = coin.transform.position;
-                    rotation = coin.transform.rotation;
-                    var rb = coin.GetComponent<Rigidbody>();
-                    velocity = rb.velocity;
-                    angularVelocity = rb.angularVelocity;
-                    value = coin.GetComponent<Coin>().value;
-                }
+                value = movableObject.GetComponent<CoinObject>().value;
+            }
+        }
+
+        [Serializable]
+        internal class PowerUpSaveData : MovableObjectSaveData
+        {
+            public PowerUpObject.PowerUpType type;
+
+            internal PowerUpSaveData(MovableObject movableObject) : base(movableObject)
+            {
+                type = movableObject.GetComponent<PowerUpObject>().type;
             }
         }
     }

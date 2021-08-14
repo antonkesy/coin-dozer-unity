@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class CoinCatcher : MonoBehaviour
+public class CatcherManager : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
-    [SerializeField] private CoinCatcherTrigger[] failTrigger;
-    [SerializeField] private CoinCatcherTrigger[] winTrigger;
+    [SerializeField] private CatcherTrigger[] failTrigger;
+    [SerializeField] private CatcherTrigger[] winTrigger;
 
     private void Start()
     {
@@ -29,16 +29,13 @@ public class CoinCatcher : MonoBehaviour
     }
 
 
-    public void CallbackCoinCatcherTrigger(bool isWin, Coin coin)
+    internal void CallbackPowerUpTrigger(bool isWin, PowerUpObject powerUpObject)
     {
-#if UNITY_EDITOR
-        Debug.Log($"Coin fallen -> is win? = {isWin} value={coin.value}");
-#endif
-        if (isWin)
-        {
-            gameManager.AddScore(coin.value);
-        }
+        gameManager.ProcessFallenPowerUp(powerUpObject, isWin);
+    }
 
-        gameManager.CoinFallenDown(coin);
+    internal void CallbackCoinTrigger(bool isWin, CoinObject coinObject)
+    {
+        gameManager.CoinFallenDown(coinObject, isWin);
     }
 }

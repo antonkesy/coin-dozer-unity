@@ -4,11 +4,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private LevelManager levelManager;
-    [SerializeField] private CoinManager coinManager;
+    [SerializeField] private MovableObjectsManager movableObjectsManager;
     [SerializeField] private UIManager uiManger;
     [SerializeField] private Shaker shaker;
-
-    [SerializeField] private WallsPowerUpManager wallsPowerUpManager;
+    [SerializeField] private PowerUpManager powerUpManager;
 
     [SerializeField] private bool loadGameData;
 
@@ -22,7 +21,7 @@ public class GameManager : MonoBehaviour
             saveData = GameSaver.LoadGame();
         }
 
-        coinManager.StartCall(loadGameData && saveData != null, saveData);
+        movableObjectsManager.StartCall(loadGameData && saveData != null, saveData);
     }
 
     private void OnApplicationQuit()
@@ -30,7 +29,7 @@ public class GameManager : MonoBehaviour
         SaveGameData();
     }
 
-    void OnApplicationPause(bool pauseStatus)
+    private void OnApplicationPause(bool pauseStatus)
     {
         if (pauseStatus)
         {
@@ -38,7 +37,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void OnApplicationFocus(bool hasFocus)
+    public void OnApplicationFocus(bool hasFocus)
     {
         if (!hasFocus)
         {
@@ -46,7 +45,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void AddScore(int value)
+    private void AddScore(int value)
     {
         levelManager.AddScore(value);
     }
@@ -54,15 +53,24 @@ public class GameManager : MonoBehaviour
     //TODO move to GameSaver
     private void SaveGameData()
     {
-        var coins = coinManager.GetUsedCoins();
+        var usedMovableObjects = movableObjectsManager.GetUsedMovableObjects();
 
-        var coinData = new List<GameSaver.SaveData.CoinData>(coins.Count);
-        foreach (var coin in coins)
+        var coinData = new List<GameSaver.SaveData.CoinSaveData>(usedMovableObjects.Count);
+        var powerUpData = new List<GameSaver.SaveData.PowerUpSaveData>(usedMovableObjects.Count);
+
+        foreach (var movableObject in usedMovableObjects)
         {
-            coinData.Add(new GameSaver.SaveData.CoinData(coin));
+            if (movableObject.GetType() == typeof(CoinObject))
+            {
+                coinData.Add(new GameSaver.SaveData.CoinSaveData(movableObject));
+            }
+            else if (movableObject.GetType() == typeof(PowerUpObject))
+            {
+                powerUpData.Add(new GameSaver.SaveData.PowerUpSaveData(movableObject));
+            }
         }
 
-        GameSaver.SaveGame(new GameSaver.SaveData(levelManager.levelScore, levelManager.level, coinData));
+        GameSaver.SaveGame(new GameSaver.SaveData(levelManager.levelScore, levelManager.level, coinData, powerUpData));
     }
 
     public void UpdateScoreUI(long levelScore, long scorePerLevel)
@@ -80,13 +88,29 @@ public class GameManager : MonoBehaviour
         shaker.StartShaking(3);
     }
 
-    public void CoinFallenDown(Coin coin)
+    public void CoinFallenDown(CoinObject coinObject, bool isWin)
     {
-        coinManager.RemoveCoin(coin);
+        if (isWin)
+        {
+            AddScore(coinObject.value);
+        }
+
+        movableObjectsManager.RemoveMovableObject(coinObject);
+    }
+
+    internal void ProcessFallenPowerUp(PowerUpObject powerUpObject, bool isWin)
+    {
+        powerUpManager.ProcessPowerUpDrop(powerUpObject);
+        movableObjectsManager.RemoveMovableObject(powerUpObject);
     }
 
     public void ActivateWallPowerUp()
     {
-        wallsPowerUpManager.Activate();
+        powerUpManager.ActivateWallPowerUp();
+    }
+
+    public void AddPowerUp(GameObject wallPowerUpManager, Vector3 vector3)
+    {
+        movableObjectsManager.AddPowerUp(wallPowerUpManager, vector3);
     }
 }

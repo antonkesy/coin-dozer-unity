@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public class Coin : MonoBehaviour
+public class MovableObject : MonoBehaviour
 {
     internal int Index { set; get; }
     internal Rigidbody Rb { private set; get; }
-    [SerializeField] public int value = 1;
 
     private void Awake()
     {

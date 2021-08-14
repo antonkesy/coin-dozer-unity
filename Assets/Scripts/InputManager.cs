@@ -1,10 +1,11 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 public class InputManager : MonoBehaviour
 {
-    [SerializeField] private CoinManager coinManager;
+    [FormerlySerializedAs("coinManager")] [SerializeField] private MovableObjectsManager movableObjectsManager;
 
     private Camera _main;
 
@@ -60,7 +61,7 @@ public class InputManager : MonoBehaviour
         {
             if (XInRange(hit.point.x) && ZInRange(hit.point.z))
             {
-                coinManager.ClickPos(hit.point);
+                movableObjectsManager.AddCoinClickPos(hit.point);
             }
         }
     }
