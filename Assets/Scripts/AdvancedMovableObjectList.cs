@@ -3,7 +3,7 @@ using UnityEngine;
 
 internal class AdvancedMovableObjectList
 {
-    [SerializeField] private PowerUpManager _powerUpManager;
+    private readonly PowerUpManager _powerUpManager;
     private readonly MovableObjectsManager _movableObjectsManager;
     private readonly LinkedList<int> _unusedObjectsIndex; //TODO check if too big and clean up
     internal List<MovableObject> MovableObjects { get; } //TODO own implementation of list with add returns index

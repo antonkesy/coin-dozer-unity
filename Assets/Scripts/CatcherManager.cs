@@ -31,11 +31,13 @@ public class CatcherManager : MonoBehaviour
 
     internal void CallbackPowerUpTrigger(bool isWin, PowerUpObject powerUpObject)
     {
+        powerUpObject.IsBeingDeleted = true;
         gameManager.ProcessFallenPowerUp(powerUpObject, isWin);
     }
 
     internal void CallbackCoinTrigger(bool isWin, CoinObject coinObject)
     {
+        coinObject.IsBeingDeleted = true;
         gameManager.CoinFallenDown(coinObject, isWin);
     }
 }

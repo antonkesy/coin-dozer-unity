@@ -87,7 +87,8 @@ public class MovableObjectsManager : MonoBehaviour
 
     internal List<MovableObject> GetUsedMovableObjects()
     {
-        return _movableObjectList.MovableObjects.Where(obj => obj.gameObject.activeSelf).ToList();
+        return _movableObjectList.MovableObjects.Where(obj => obj.gameObject.activeSelf && !obj.IsBeingDeleted)
+            .ToList();
     }
 
     internal MovableObject SpawnCoin(Vector3 position)
