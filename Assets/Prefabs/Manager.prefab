@@ -108,6 +108,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9e9074223b2cb6419636849e3daa5af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftWall: {fileID: 0}
+  rightWall: {fileID: 0}
+  backWall: {fileID: 0}
   objectsInPool: 50
   coinPrefab: {fileID: 128633726366256060, guid: 5b25d96489c5e4f4e8cc7cab316b267c, type: 3}
   coinSpawnHeight: 7

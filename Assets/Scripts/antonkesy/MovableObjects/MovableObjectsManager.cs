@@ -8,6 +8,12 @@ namespace antonkesy.MovableObjects
 {
     public class MovableObjectsManager : MonoBehaviour
     {
+        [SerializeField] private Transform leftWall;
+        private float _leftWallStartX;
+        [SerializeField] private Transform rightWall;
+        private float _rightWallStartX;
+        [SerializeField] private Transform backWall;
+        private float _backWallStartZ;
         [SerializeField] private int objectsInPool = 50;
         [SerializeField] private GameObject coinPrefab;
         [SerializeField] private float coinSpawnHeight;
@@ -15,12 +21,21 @@ namespace antonkesy.MovableObjects
         private AdvancedMovableObjectList _movableObjectList;
         private MovableObjectRemoveManager _movableObjectRemoveManager;
 
+
         private void Awake()
         {
             _powerUpManager = GetComponent<PowerUpManager>();
             _movableObjectRemoveManager = GetComponent<MovableObjectRemoveManager>();
             _movableObjectList = new AdvancedMovableObjectList(this, _powerUpManager, objectsInPool);
             _movableObjectRemoveManager.SetUp(_movableObjectList);
+            CalculateWallStart();
+        }
+
+        private void CalculateWallStart()
+        {
+            _leftWallStartX = leftWall.transform.position.x - leftWall.transform.localScale.x / 2;
+            _rightWallStartX = rightWall.transform.position.x + rightWall.transform.localScale.x / 2;
+            _backWallStartZ = backWall.transform.position.z + backWall.transform.localScale.z / 2;
         }
 
 
@@ -52,7 +67,30 @@ namespace antonkesy.MovableObjects
         internal void AddCoinClickPos(Vector3 hitInfoPoint)
         {
             hitInfoPoint.y = coinSpawnHeight;
+            hitInfoPoint = AdjustCoinInWallPosition(hitInfoPoint);
             _movableObjectList.AddCoin(hitInfoPoint);
+        }
+
+        private Vector3 AdjustCoinInWallPosition(Vector3 coinPos)
+        {
+            var coinRadius = coinPrefab.transform.localScale.x / 2;
+
+            if (coinPos.x + coinRadius >= _leftWallStartX)
+            {
+                coinPos.x = _leftWallStartX - coinRadius;
+            }
+
+            if (coinPos.x - coinRadius <= _rightWallStartX)
+            {
+                coinPos.x = _rightWallStartX + coinRadius;
+            }
+
+            if (coinPos.z - coinRadius <= _backWallStartZ)
+            {
+                coinPos.z = _backWallStartZ + coinRadius;
+            }
+
+            return coinPos;
         }
 
 
