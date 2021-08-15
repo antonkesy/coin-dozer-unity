@@ -492,7 +492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68255b9e7cd8dbd45a112b55e9052d46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startY: -10
+  startY: -15
   timeUp: 0
   maxTime: 10
 --- !u!1 &8674569660177235164
