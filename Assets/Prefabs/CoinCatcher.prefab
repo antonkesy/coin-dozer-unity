@@ -334,7 +334,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3644818459056809811}
-  - component: {fileID: 3644818459056809810}
   m_Layer: 0
   m_Name: CoinCatcher
   m_TagString: Untagged
@@ -359,28 +358,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3644818459056809810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3644818459056809808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a70d20b13fa62f247849c97db6001290, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
-  failTrigger:
-  - {fileID: 3644818459470130493}
-  - {fileID: 3644818457853111660}
-  - {fileID: 3644818458031247969}
-  - {fileID: 3644818459784182881}
-  winTrigger:
-  - {fileID: 3644818458373900970}
-  - {fileID: 3644818458465122231}
-  - {fileID: 3644818459167952025}
 --- !u!1 &3644818459167952018
 GameObject:
   m_ObjectHideFlags: 0
