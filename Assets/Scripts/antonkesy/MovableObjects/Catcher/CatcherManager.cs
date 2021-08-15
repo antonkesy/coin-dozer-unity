@@ -1,12 +1,18 @@
+using System;
 using UnityEngine;
 
 namespace antonkesy.MovableObjects.Catcher
 {
     public class CatcherManager : MonoBehaviour
     {
-        [SerializeField] private GameManager gameManager;
+        private GameManager _gameManager;
         [SerializeField] private CatcherTrigger[] failTrigger;
         [SerializeField] private CatcherTrigger[] winTrigger;
+
+        private void Awake()
+        {
+            _gameManager = GetComponent<GameManager>();
+        }
 
         private void Start()
         {
@@ -34,13 +40,13 @@ namespace antonkesy.MovableObjects.Catcher
         internal void CallbackPowerUpTrigger(bool isWin, PowerUpObject powerUpObject)
         {
             powerUpObject.IsBeingDeleted = true;
-            gameManager.ProcessFallenPowerUp(powerUpObject, isWin);
+            _gameManager.ProcessFallenPowerUp(powerUpObject, isWin);
         }
 
         internal void CallbackCoinTrigger(bool isWin, CoinObject coinObject)
         {
             coinObject.IsBeingDeleted = true;
-            gameManager.CoinFallenDown(coinObject, isWin);
+            _gameManager.CoinFallenDown(coinObject, isWin);
         }
     }
 }

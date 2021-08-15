@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace antonkesy.MovableObjects.Shaker
 {
-    public class Shaker : MonoBehaviour
+    public class ShakerController : MonoBehaviour
     {
         [SerializeField] private Animation shakeAnimation;
 

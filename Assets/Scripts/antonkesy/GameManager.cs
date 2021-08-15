@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using antonkesy.MovableObjects;
 using antonkesy.MovableObjects.Shaker;
@@ -9,14 +10,20 @@ namespace antonkesy
 {
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] private LevelManager levelManager;
-        [SerializeField] private MovableObjectsManager movableObjectsManager;
         [SerializeField] private UIManager uiManger;
-        [SerializeField] private Shaker shaker;
-        [SerializeField] private PowerUpManager powerUpManager;
+        [SerializeField] private ShakerController shakerController;
+        private LevelManager _levelManager;
+        private MovableObjectsManager _movableObjectsManager;
+        private PowerUpManager _powerUpManager;
 
         [SerializeField] private bool loadGameData;
 
+        private void Awake()
+        {
+            _levelManager = GetComponent<LevelManager>();
+            _movableObjectsManager = GetComponent<MovableObjectsManager>();
+            _powerUpManager = GetComponent<PowerUpManager>();
+        }
 
         private void Start()
         {
@@ -27,7 +34,7 @@ namespace antonkesy
                 saveData = GameSaver.LoadGame();
             }
 
-            movableObjectsManager.StartCall(loadGameData && saveData != null, saveData);
+            _movableObjectsManager.StartCall(loadGameData && saveData != null, saveData);
         }
 
         private void OnApplicationQuit()
@@ -53,13 +60,13 @@ namespace antonkesy
 
         private void AddScore(int value)
         {
-            levelManager.AddScore(value);
+            _levelManager.AddScore(value);
         }
 
         //TODO move to GameSaver
         private void SaveGameData()
         {
-            var usedMovableObjects = movableObjectsManager.GetUsedMovableObjects();
+            var usedMovableObjects = _movableObjectsManager.GetUsedMovableObjects();
 
             var coinData = new List<GameSaver.SaveData.CoinSaveData>(usedMovableObjects.Count);
             var powerUpData = new List<GameSaver.SaveData.PowerUpSaveData>(usedMovableObjects.Count);
@@ -76,7 +83,8 @@ namespace antonkesy
                 }
             }
 
-            GameSaver.SaveGame(new GameSaver.SaveData(levelManager.levelScore, levelManager.level, coinData, powerUpData));
+            GameSaver.SaveGame(new GameSaver.SaveData(_levelManager.levelScore, _levelManager.level, coinData,
+                powerUpData));
         }
 
         public void UpdateScoreUI(long levelScore, long scorePerLevel)
@@ -91,7 +99,7 @@ namespace antonkesy
 
         public void Shake()
         {
-            shaker.StartShaking(3);
+            shakerController.StartShaking(3);
         }
 
         public void CoinFallenDown(CoinObject coinObject, bool isWin)
@@ -101,23 +109,23 @@ namespace antonkesy
                 AddScore(coinObject.value);
             }
 
-            movableObjectsManager.RemoveMovableObject(coinObject);
+            _movableObjectsManager.RemoveMovableObject(coinObject);
         }
 
         internal void ProcessFallenPowerUp(PowerUpObject powerUpObject, bool isWin)
         {
-            powerUpManager.ProcessPowerUpDrop(powerUpObject);
-            movableObjectsManager.RemoveMovableObject(powerUpObject);
+            _powerUpManager.ProcessPowerUpDrop(powerUpObject);
+            _movableObjectsManager.RemoveMovableObject(powerUpObject);
         }
 
         public void ActivateWallPowerUp()
         {
-            powerUpManager.ActivateWallPowerUp();
+            _powerUpManager.ActivateWallPowerUp();
         }
 
         public void AddPowerUp(GameObject wallPowerUpManager, Vector3 vector3)
         {
-            movableObjectsManager.AddPowerUp(wallPowerUpManager, vector3);
+            _movableObjectsManager.AddPowerUp(wallPowerUpManager, vector3);
         }
     }
 }

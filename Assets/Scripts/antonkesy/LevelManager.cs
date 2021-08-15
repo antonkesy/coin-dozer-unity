@@ -1,26 +1,32 @@
+using System;
 using UnityEngine;
 
 namespace antonkesy
 {
     public class LevelManager : MonoBehaviour
     {
-        [SerializeField] private GameManager gameManager;
+        private GameManager _gameManager;
         public long levelScore;
         public long level = 1;
 
         [SerializeField] private long scorePerLevel = 20;
 
+        private void Awake()
+        {
+            _gameManager = GetComponent<GameManager>();
+        }
+
         private void Start()
         {
-            gameManager.UpdateScoreUI(levelScore, scorePerLevel);
-            gameManager.UpdateLevelUI(level);
+            _gameManager.UpdateScoreUI(levelScore, scorePerLevel);
+            _gameManager.UpdateLevelUI(level);
         }
 
         public void AddScore(int value)
         {
             levelScore += value;
             CheckNewLevel();
-            gameManager.UpdateScoreUI(levelScore, scorePerLevel);
+            _gameManager.UpdateScoreUI(levelScore, scorePerLevel);
         }
 
         private void CheckNewLevel()
@@ -37,8 +43,8 @@ namespace antonkesy
             ++level;
             scorePerLevel *= 2;
             CheckNewLevel();
-            gameManager.UpdateScoreUI(levelScore, scorePerLevel);
-            gameManager.UpdateLevelUI(level);
+            _gameManager.UpdateScoreUI(levelScore, scorePerLevel);
+            _gameManager.UpdateLevelUI(level);
         }
     }
 }

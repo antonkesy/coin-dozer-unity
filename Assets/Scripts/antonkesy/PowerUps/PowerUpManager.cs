@@ -1,3 +1,4 @@
+using System;
 using antonkesy.MovableObjects;
 using UnityEngine;
 
@@ -5,9 +6,14 @@ namespace antonkesy.PowerUps
 {
     public class PowerUpManager : MonoBehaviour
     {
-        [SerializeField] private GameManager gameManager;
+        private GameManager _gameManager;
         [SerializeField] private GameObject wallPowerUpPrefab;
         [SerializeField] private WallsPowerUpManager wallPowerUpManager;
+
+        private void Awake()
+        {
+            _gameManager = GetComponent<GameManager>();
+        }
 
         internal void ProcessPowerUpDrop(PowerUpObject powerUpGameObject)
         {
@@ -29,7 +35,7 @@ namespace antonkesy.PowerUps
 
         internal void SpawnWallPowerUpObject()
         {
-            gameManager.AddPowerUp(wallPowerUpPrefab, new Vector3(0, 10F, 10F));
+            _gameManager.AddPowerUp(wallPowerUpPrefab, new Vector3(0, 10F, 10F));
         }
 
         internal GameObject GetPowerUpPrefab(PowerUpObject.PowerUpType type)

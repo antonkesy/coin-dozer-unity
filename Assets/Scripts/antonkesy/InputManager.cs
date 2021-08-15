@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using antonkesy.MovableObjects;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace antonkesy
 {
     public class InputManager : MonoBehaviour
     {
-        [FormerlySerializedAs("coinManager")] [SerializeField] private MovableObjectsManager movableObjectsManager;
+        private MovableObjectsManager _movableObjectsManager;
 
         private Camera _main;
 
@@ -17,6 +18,11 @@ namespace antonkesy
         [SerializeField] private float zMin;
 
         [SerializeField] private float zMax;
+
+        private void Awake()
+        {
+            _movableObjectsManager = GetComponent<MovableObjectsManager>();
+        }
 
         private void Start()
         {
@@ -64,7 +70,7 @@ namespace antonkesy
             {
                 if (XInRange(hit.point.x) && ZInRange(hit.point.z))
                 {
-                    movableObjectsManager.AddCoinClickPos(hit.point);
+                    _movableObjectsManager.AddCoinClickPos(hit.point);
                 }
             }
         }

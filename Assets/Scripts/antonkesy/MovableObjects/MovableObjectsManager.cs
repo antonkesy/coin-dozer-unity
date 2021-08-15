@@ -8,20 +8,19 @@ namespace antonkesy.MovableObjects
 {
     public class MovableObjectsManager : MonoBehaviour
     {
-        [SerializeField] private PowerUpManager powerUpManager;
         [SerializeField] private int objectsInPool = 50;
-
         [SerializeField] private GameObject coinPrefab;
         [SerializeField] private float coinSpawnHeight;
-
+        private PowerUpManager _powerUpManager;
         private AdvancedMovableObjectList _movableObjectList;
-
-        [SerializeField] private MovableObjectRemoveManager movableObjectRemoveManager;
+        private MovableObjectRemoveManager _movableObjectRemoveManager;
 
         private void Awake()
         {
-            _movableObjectList = new AdvancedMovableObjectList(this, powerUpManager, objectsInPool);
-            movableObjectRemoveManager.SetUp(_movableObjectList);
+            _powerUpManager = GetComponent<PowerUpManager>();
+            _movableObjectRemoveManager = GetComponent<MovableObjectRemoveManager>();
+            _movableObjectList = new AdvancedMovableObjectList(this, _powerUpManager, objectsInPool);
+            _movableObjectRemoveManager.SetUp(_movableObjectList);
         }
 
 
@@ -105,7 +104,7 @@ namespace antonkesy.MovableObjects
 
         internal void RemoveMovableObject(MovableObject movableObject)
         {
-            movableObjectRemoveManager.RemoveCoin(movableObject);
+            _movableObjectRemoveManager.RemoveCoin(movableObject);
         }
 
         internal MovableObject SpawnPowerUp(GameObject powerUpPrefab, Vector3 position)

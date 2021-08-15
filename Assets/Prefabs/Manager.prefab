@@ -1,0 +1,146 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3679653330485945203
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3679653330485945210}
+  - component: {fileID: 3679653330485945211}
+  - component: {fileID: 3679653330485945208}
+  - component: {fileID: 3679653330485945209}
+  - component: {fileID: 3679653330485945206}
+  - component: {fileID: 3679653330485945204}
+  - component: {fileID: 3679653330485945205}
+  - component: {fileID: 3679653330485945202}
+  m_Layer: 0
+  m_Name: Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3679653330485945210
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3679653330485945203}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3679653330485945211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3679653330485945203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 241eefe96d7f5f5449952649cecb8960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiManger: {fileID: 0}
+  shakerController: {fileID: 0}
+  loadGameData: 1
+--- !u!114 &3679653330485945208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3679653330485945203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45d1628ea1165354ab71cbfc6e018d96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinSpawnWidth: 9
+  zMin: -6
+  zMax: 3
+--- !u!114 &3679653330485945209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3679653330485945203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf8e1972d2ffc4847a0e39009f9f52a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallPowerUpPrefab: {fileID: 128633726366256060, guid: defcd11db5822bb4a81368ae42d4db20, type: 3}
+  wallPowerUpManager: {fileID: 0}
+--- !u!114 &3679653330485945206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3679653330485945203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36663eca93e1d6a42931e3e2b364f148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelScore: 0
+  level: 0
+  scorePerLevel: 20
+--- !u!114 &3679653330485945204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3679653330485945203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e9074223b2cb6419636849e3daa5af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectsInPool: 50
+  coinPrefab: {fileID: 128633726366256060, guid: 5b25d96489c5e4f4e8cc7cab316b267c, type: 3}
+  coinSpawnHeight: 7
+--- !u!114 &3679653330485945205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3679653330485945203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80df637fedef48259209a00e223783ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3679653330485945202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3679653330485945203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a70d20b13fa62f247849c97db6001290, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  failTrigger:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  winTrigger:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
