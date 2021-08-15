@@ -371,6 +371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a70d20b13fa62f247849c97db6001290, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   failTrigger:
   - {fileID: 3644818459470130493}
   - {fileID: 3644818457853111660}
