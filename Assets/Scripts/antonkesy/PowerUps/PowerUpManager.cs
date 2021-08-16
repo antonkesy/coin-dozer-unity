@@ -25,6 +25,9 @@ namespace antonkesy.PowerUps
                 case PowerUpObject.PowerUpType.Wall:
                     ActivateWallPowerUp();
                     break;
+                case PowerUpObject.PowerUpType.Shake:
+                    _gameManager.Shake();
+                    break;
             }
         }
 

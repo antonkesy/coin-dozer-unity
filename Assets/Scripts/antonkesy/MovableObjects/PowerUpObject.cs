@@ -6,7 +6,8 @@ namespace antonkesy.MovableObjects
     {
         internal enum PowerUpType
         {
-            Wall
+            Wall,
+            Shake
         }
 
         [SerializeField] internal PowerUpType type;
